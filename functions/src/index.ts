@@ -16,14 +16,14 @@ export const helloWorld = functions.https.onRequest(
       message = p
         .format(text, { parser: "babel" })
         .split("\n")
-        .map(frag => `<code>${frag}</code>`)
+        .map(frag => "```js " + frag + " ```")
         .join("%0A");
     } catch (err) {
       console.log(JSON.stringify(err));
       message = err.message;
     }
     await get(
-      `https://api.telegram.org/bot${telegramToken}/sendMessage?chat_id=${id}&text=${message}&parse_mode=HTML`
+      `https://api.telegram.org/bot${telegramToken}/sendMessage?chat_id=${id}&text=${message}&parse_mode=Markdown`
     );
 
     response.send(true);
