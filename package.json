@@ -1,7 +1,7 @@
 {
   "name": "telegram-prettier-bot",
   "version": "1.0.0",
-  "description": "",
+  "description": "@prettier_bot on Telegram !",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -10,7 +10,7 @@
     "type": "git",
     "url": "git+https://github.com/diljitvj/telegram-prettier-bot.git"
   },
-  "author": "",
+  "author": "Diljit VJ",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/diljitvj/telegram-prettier-bot/issues"
