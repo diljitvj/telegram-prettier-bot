@@ -1,10 +1,31 @@
 import * as functions from "firebase-functions";
+import * as p from "prettier";
+import { get } from "https";
+import { telegramToken } from "./config.json";
 
-// // Start writing Firebase Functions
-// // https://firebase.google.com/docs/functions/typescript
-//
-export const helloWorld = functions.https.onRequest((request, response) => {
-  console.log(JSON.stringify(request.body));
-  console.log(JSON.stringify(request.query));
-  response.send(true);
-});
+export const helloWorld = functions.https.onRequest(
+  async (request, response) => {
+    const {
+      message: {
+        chat: { id },
+        text
+      }
+    } = request.body;
+    let message;
+    try {
+      message = p
+        .format(text, { parser: "babel" })
+        .split("\n")
+        .map(frag => `<code>${frag}</code>`)
+        .join("%0A");
+    } catch (err) {
+      console.log(JSON.stringify(err));
+      message = err.message;
+    }
+    await get(
+      `https://api.telegram.org/bot${telegramToken}/sendMessage?chat_id=${id}&text=${message}&parse_mode=HTML`
+    );
+
+    response.send(true);
+  }
+);
